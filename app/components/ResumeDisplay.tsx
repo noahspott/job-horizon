@@ -15,21 +15,21 @@ const ResumeDisplay: React.FC<ResumeDisplayProps> = ({ resume }) => {
   const resumeRef = useRef<HTMLPreElement>(null);
   const [copied, setCopied] = useState(false);
 
-  const handleDownload = async (format: string) => {
-    switch (format) {
-      case "pdf":
-        await downloadAsPDF(resume);
-        break;
-      case "docx":
-        await downloadAsWord(resume);
-        break;
-      case "txt":
-        downloadAsText(resume);
-        break;
-      default:
-        console.error("Unsupported format");
-    }
-  };
+  // const handleDownload = async (format: string) => {
+  //   switch (format) {
+  //     case "pdf":
+  //       await downloadAsPDF(resume);
+  //       break;
+  //     case "docx":
+  //       await downloadAsWord(resume);
+  //       break;
+  //     case "txt":
+  //       downloadAsText(resume);
+  //       break;
+  //     default:
+  //       console.error("Unsupported format");
+  //   }
+  // };
 
   const handleCopy = () => {
     if (resumeRef.current && !copied) {

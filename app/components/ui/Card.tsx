@@ -1,7 +1,6 @@
-interface CardProps {
+interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
   className?: string;
-  children?: React.ReactNode;
-  [key: string]: any;
 }
 
 export function Card({ className = "", ...props }: CardProps) {
