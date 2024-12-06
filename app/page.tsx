@@ -38,10 +38,10 @@ export default function Home() {
               </Link>
 
               <Link
-                href="/examples"
+                href="/how-it-works"
                 className="text-gray-400 hover:text-white transition-colors"
               >
-                View Examples →
+                How it Works →
               </Link>
             </div>
           </div>
