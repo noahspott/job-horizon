@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 
 export default function Home() {
@@ -5,7 +7,7 @@ export default function Home() {
     <main className="max-w-screen-xl mx-auto px-4">
       <section className="py-20 flex flex-col gap-4 max-w-screen-md items-start">
         <h1 className="text-5xl sm:text-7xl font-black bg-gradient-to-r from-white/80 via-white to-white/85 bg-clip-text text-transparent">
-          Job Horizon
+          JobHorizon.ai
         </h1>
         <p className="sm:text-lg font-light text-white/80">
           Your career companion for seamless job applications. Build your
