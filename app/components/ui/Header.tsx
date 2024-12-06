@@ -40,7 +40,7 @@ export default async function Header({
                 {menuItem.display}
               </Link>
             ))}
-            <AuthButton styles="bg-white/10 hover:bg-white/20 backdrop-blur-sm" />
+            <AuthButton />
           </div>
         </nav>
       </Content>

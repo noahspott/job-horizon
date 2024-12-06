@@ -57,24 +57,29 @@ export default function CreateResume() {
                 value={jobDescription}
                 onChange={(e) => setJobDescription(e.target.value)}
                 disabled={isGenerating}
+                required
+                title="Please paste a job description to generate your resume"
               />
             </div>
             <button
               type="submit"
-              className={`px-4 py-2 bg-blue-600 text-gray-100 rounded-lg hover:bg-blue-700 transition-colors ${
+              className={`group relative px-6 py-3 rounded-full bg-white text-black font-medium transition-all hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:scale-105 ${
                 isGenerating ? "opacity-50 cursor-not-allowed" : ""
               }`}
               disabled={isGenerating}
             >
               {isGenerating ? (
                 <div className="flex items-center gap-2">
-                  <div className="w-1.5 h-1.5 bg-gray-100 rounded-full animate-bounce" />
-                  <div className="w-1.5 h-1.5 bg-gray-100 rounded-full animate-bounce [animation-delay:0.2s]" />
-                  <div className="w-1.5 h-1.5 bg-gray-100 rounded-full animate-bounce [animation-delay:0.4s]" />
+                  <div className="w-1.5 h-1.5 bg-black rounded-full animate-bounce" />
+                  <div className="w-1.5 h-1.5 bg-black rounded-full animate-bounce [animation-delay:0.2s]" />
+                  <div className="w-1.5 h-1.5 bg-black rounded-full animate-bounce [animation-delay:0.4s]" />
                   <span className="ml-2">Generating...</span>
                 </div>
               ) : (
-                "Generate Resume"
+                <>
+                  Generate Resume
+                  <span className="absolute inset-x-0 h-px bottom-0 bg-gradient-to-r from-transparent via-black/50 to-transparent group-hover:animate-shine" />
+                </>
               )}
             </button>
           </form>

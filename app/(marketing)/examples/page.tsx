@@ -62,7 +62,7 @@ const ExamplesPage = () => {
 
         <div className="mt-16 text-center">
           <Link
-            href="/create"
+            href="/dashboard/create-resume"
             className="inline-flex items-center justify-center px-6 py-3 text-lg font-medium rounded-md text-white bg-gradient-to-r from-blue-600/20 to-purple-600/20 hover:from-blue-600/30 hover:to-purple-600/30 border border-blue-500/20 hover:border-blue-500/30 transition-all duration-300"
           >
             Create Your Own Resume

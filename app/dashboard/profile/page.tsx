@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/app/components/ui/Button";
 import { Input } from "@/app/components/ui/Input";
 import { Card, CardHeader, CardContent } from "@/app/components/ui/Card";
+import { createClient } from "@/app/utils/supabase/client";
 
 interface Education {
   school: string;
@@ -38,35 +39,74 @@ interface ProfileData {
 }
 
 export default function Profile() {
+  const supabase = createClient();
+  const [isLoading, setIsLoading] = useState(true);
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState<ProfileData>({
-    email: "user@example.com",
-    name: "John Doe",
-    city: "San Francisco",
-    state: "CA",
-    country: "USA",
-    linkedin: "linkedin.com/in/johndoe",
-    github: "github.com/johndoe",
-    education: [
-      {
-        school: "University of Example",
-        degree: "Bachelor of Science",
-        fieldOfStudy: "Computer Science",
-        startDate: "2018",
-        endDate: "2022",
-      },
-    ],
-    workExperience: [
-      {
-        company: "Tech Corp",
-        position: "Software Engineer",
-        startDate: "2022",
-        endDate: "Present",
-        description: "Full-stack development",
-      },
-    ],
-    skills: ["React", "TypeScript", "Node.js"],
+    email: "",
+    name: "",
+    city: "",
+    state: "",
+    country: "",
+    linkedin: "",
+    github: "",
+    education: [],
+    workExperience: [],
+    skills: [],
   });
+
+  useEffect(() => {
+    const loadProfile = async () => {
+      setIsLoading(true);
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) return;
+
+        const { data, error } = await supabase
+          .from("user_profiles")
+          .select("*")
+          .single();
+
+        if (error) {
+          console.error("Error loading profile:", error);
+          return;
+        }
+
+        const sanitizedData = {
+          email: data.email || "",
+          name: data.name || "",
+          city: data.city || "",
+          state: data.state || "",
+          country: data.country || "",
+          linkedin: data.linkedin || "",
+          github: data.github || "",
+          education: data.education || [],
+          workExperience: data.work_experience || [],
+          skills: data.skills || [],
+        };
+
+        setProfileData(sanitizedData);
+      } catch (error) {
+        console.error("Error in loadProfile:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, [supabase]);
+
+  if (isLoading) {
+    return (
+      <div className="container mx-auto py-8">
+        <div className="flex justify-center items-center h-64">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-300"></div>
+        </div>
+      </div>
+    );
+  }
 
   const ViewMode = () => (
     <div className="space-y-8">
@@ -142,9 +182,66 @@ export default function Profile() {
       setFormData((prev) => ({ ...prev, [field]: value }));
     };
 
-    const handleSaveChanges = () => {
-      setProfileData(formData);
-      setIsEditing(false);
+    const handleSaveChanges = async () => {
+      try {
+        const {
+          data: { user },
+        } = await supabase.auth.getUser();
+        if (!user) {
+          console.error("Authentication error: No user found");
+          return;
+        }
+
+        // Convert camelCase to snake_case for database compatibility
+        const dbFormattedData = {
+          id: user.id,
+          user_id: user.id,
+          email: formData.email,
+          name: formData.name,
+          city: formData.city,
+          state: formData.state,
+          country: formData.country,
+          linkedin: formData.linkedin,
+          github: formData.github,
+          education: formData.education,
+          work_experience: formData.workExperience,
+          skills: formData.skills,
+          updated_at: new Date().toISOString(),
+        };
+
+        console.log("Attempting to save profile with data:", dbFormattedData);
+
+        const { data, error } = await supabase
+          .from("profiles")
+          .upsert(dbFormattedData, {
+            onConflict: "user_id",
+            ignoreDuplicates: false,
+          })
+          .select()
+          .single();
+
+        if (error) {
+          console.error("Supabase error details:", {
+            message: error.message,
+            code: error.code,
+            details: error.details,
+            hint: error.hint,
+          });
+          throw error;
+        }
+
+        console.log("Save successful:", data);
+        setProfileData(formData);
+        setIsEditing(false);
+      } catch (error: any) {
+        console.error("Detailed error:", {
+          message: error?.message,
+          code: error?.code,
+          details: error?.details,
+          stack: error?.stack,
+        });
+        alert("Failed to save profile. Please check the console for details.");
+      }
     };
 
     const handleAddSkill = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -480,11 +577,6 @@ export default function Profile() {
         </Card>
       </div>
     );
-  };
-
-  const handleSave = () => {
-    // Here you would typically send the data to your backend
-    setIsEditing(false);
   };
 
   return (
