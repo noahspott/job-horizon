@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { createClient } from "../../utils/supabase/server";
 import AuthButton from "../AuthButton";
 import Content from "./Content";
 
@@ -13,13 +12,8 @@ export default async function Header({
 }: {
   menuItems?: Array<{ href: string; display: string }>;
 }) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
   return (
-    <header className="relative bg-gradient-to-r from-blue-950 via-gray-900 to-black">
+    <header className="relative z-10 bg-gradient-to-r from-blue-950 via-gray-900 to-black">
       <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] opacity-30" />
 
       <Content>

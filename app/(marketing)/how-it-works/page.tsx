@@ -26,7 +26,7 @@ export default function HowItWorks() {
           </div>
 
           {/* Steps grid */}
-          <div className="grid md:grid-cols-2 gap-8 w-full mt-8">
+          <div className="flex flex-col gap-12 w-full max-w-4xl mt-8">
             {[
               {
                 step: "1",
@@ -56,31 +56,40 @@ export default function HowItWorks() {
                 accent: "from-blue-700 to-blue-900",
                 video: "/videos/generate-demo.mov",
               },
-            ].map((step) => (
+            ].map((step, index) => (
               <div
                 key={step.title}
-                className="p-8 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all group"
+                className="p-8 lg:p-10 rounded-2xl bg-white/5 backdrop-blur-sm border border-white/10 hover:border-white/20 transition-all group relative"
               >
-                <div
-                  className={`w-12 h-12 rounded-full bg-gradient-to-br ${step.accent} flex items-center justify-center font-bold text-lg mb-4`}
-                >
-                  {step.step}
-                </div>
-                <h3 className="font-semibold text-xl text-white/90 mb-2">
-                  {step.title}
-                </h3>
-                <p className="text-gray-400 mb-4">{step.desc}</p>
+                {/* Connecting line */}
+                {index < 3 && (
+                  <div className="absolute left-11 top-[95%] w-0.5 h-12 bg-gradient-to-b from-white/20 to-transparent" />
+                )}
 
-                {/* Demo GIF */}
-                <div className="relative w-full aspect-video rounded-lg overflow-hidden bg-gray-900">
-                  <video
-                    src={step.video}
-                    autoPlay
-                    loop
-                    muted
-                    playsInline
-                    className="object-cover w-full h-full"
-                  />
+                <div className="flex flex-col md:flex-row gap-8 lg:gap-12">
+                  <div className="flex-1 space-y-4 md:max-w-md lg:max-w-xl xl:max-w-2xl">
+                    <div
+                      className={`w-12 h-12 rounded-full bg-gradient-to-br ${step.accent} flex items-center justify-center font-bold text-lg`}
+                    >
+                      {step.step}
+                    </div>
+                    <h3 className="font-semibold text-xl text-white/90">
+                      {step.title}
+                    </h3>
+                    <p className="text-gray-400">{step.desc}</p>
+                  </div>
+
+                  {/* Larger video section */}
+                  <div className="relative w-full md:w-[500px] lg:w-[600px] aspect-video rounded-lg overflow-hidden bg-gray-900">
+                    <video
+                      src={step.video}
+                      autoPlay
+                      loop
+                      muted
+                      playsInline
+                      className="object-cover w-full h-full"
+                    />
+                  </div>
                 </div>
               </div>
             ))}
