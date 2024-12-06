@@ -10,27 +10,31 @@ export default async function AuthButton() {
   } = await supabase.auth.getUser();
 
   return user ? (
-    <div className="flex items-center gap-4 px-4 py-2 rounded-lg bg-gray-800/50">
+    <div className="flex items-center gap-2 sm:gap-4 px-2 sm:px-4 py-1 sm:py-2 rounded-lg bg-gray-800/50">
       <Link
         href="/dashboard/profile"
-        className="flex items-center gap-2 hover:bg-gray-700/50 px-3 py-1.5 rounded-lg transition-colors"
+        className="flex items-center gap-1 sm:gap-2 hover:bg-gray-700/50 px-2 sm:px-3 py-1 sm:py-1.5 rounded-lg transition-colors"
       >
-        <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center">
+        <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-blue-500 flex items-center justify-center text-sm sm:text-base">
           {user.email?.[0].toUpperCase()}
         </div>
-        <span className="text-sm text-gray-300 hover:text-gray-100">
+        <span className="text-xs sm:text-sm text-gray-300 hover:text-gray-100">
           {user.email?.split("@")[0]}
         </span>
       </Link>
       <form action={signOutAction}>
-        <Button variant="link" size="sm">
+        <Button
+          variant="link"
+          size="sm"
+          className="text-xs sm:text-sm py-1 px-2 sm:px-3"
+        >
           Sign out
         </Button>
       </form>
     </div>
   ) : (
     <div className="flex gap-2">
-      <Button>
+      <Button className="text-xs sm:text-sm py-1 px-2 sm:px-3">
         <Link href="/sign-in">Sign in</Link>
       </Button>
     </div>

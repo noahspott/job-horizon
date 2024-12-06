@@ -17,7 +17,7 @@ export default function Home() {
           <div className="absolute -left-20 -top-20 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl" />
 
           <div className="space-y-6">
-            <h1 className="text-6xl sm:text-7xl font-black">
+            <h1 className="text-4xl sm:text-7xl font-black">
               <span className="bg-gradient-to-r from-blue-400 via-white to-blue-300 bg-clip-text text-transparent">
                 JobHorizon.ai
               </span>
