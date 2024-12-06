@@ -1,6 +1,7 @@
 import { createClient } from "@/app/utils/supabase/server";
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
+import { parseResume } from "@/app/utils/parseResume";
 
 export async function POST(request: Request) {
   try {
@@ -100,18 +101,20 @@ export async function POST(request: Request) {
       ],
     });
 
-    if (response.content && response.content.length > 0) {
+    if (response.content) {
       const contentBlock = response.content[0];
-      let resume = "";
+      let rawResume = "";
 
-      if ("text" in contentBlock) {
-        resume = contentBlock.text;
-      } else if (typeof contentBlock === "string") {
-        resume = contentBlock;
+      if (typeof contentBlock === "string") {
+        rawResume = contentBlock;
+      } else if (contentBlock && "text" in contentBlock) {
+        rawResume = contentBlock.text;
       } else {
+        console.error("Unexpected content format:", contentBlock);
         throw new Error("Unexpected content format from Claude");
       }
 
+      const resume = parseResume(rawResume);
       return NextResponse.json({ resume });
     } else {
       console.error("Claude response error: ", response);
