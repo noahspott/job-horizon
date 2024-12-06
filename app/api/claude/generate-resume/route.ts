@@ -101,7 +101,17 @@ export async function POST(request: Request) {
     });
 
     if (response.content && response.content.length > 0) {
-      const resume = response.content[0].text;
+      const contentBlock = response.content[0];
+      let resume = "";
+
+      if ("text" in contentBlock) {
+        resume = contentBlock.text;
+      } else if (typeof contentBlock === "string") {
+        resume = contentBlock;
+      } else {
+        throw new Error("Unexpected content format from Claude");
+      }
+
       return NextResponse.json({ resume });
     } else {
       console.error("Claude response error: ", response);
