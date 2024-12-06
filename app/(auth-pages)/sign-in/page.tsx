@@ -1,11 +1,20 @@
 import MagicLinkForm from "@/app/components/MagicLinkForm";
+import Content from "@/app/components/ui/Content";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Sign In",
+  description: "Sign in to your account",
+};
 
 export default function SignIn() {
   return (
-    <main>
-      <section className="py-20 px-4 flex flex-col gap-8">
-        <h1 className="text-4xl font-bold">Log in</h1>
-        <MagicLinkForm />
+    <main className="min-h-screen bg-gray-900">
+      <section className="py-12">
+        <Content>
+          <h1 className="text-3xl font-bold text-gray-100 mb-8">Sign In</h1>
+          <MagicLinkForm />
+        </Content>
       </section>
     </main>
   );

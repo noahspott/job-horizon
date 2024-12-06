@@ -9,7 +9,7 @@ export const signInAction = async (email: string) => {
     email,
     options: {
       shouldCreateUser: true,
-      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/create-resume`,
+      emailRedirectTo: `${process.env.NEXT_PUBLIC_SITE_URL}/dashboard/create-resume`,
     },
   });
 

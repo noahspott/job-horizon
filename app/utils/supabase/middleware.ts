@@ -57,12 +57,8 @@ export async function updateSession(request: NextRequest) {
   );
   console.log("********\n\n");
 
-  if (
-    !user &&
-    request.nextUrl.pathname !== "/" &&
-    !request.nextUrl.pathname.startsWith("/sign-in")
-  ) {
-    // no user, potentially respond by redirecting the user to the login page
+  if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
+    // no user trying to access protected /dashboard routes, redirect to sign-in
     console.log("No user, redirecting to sign-in");
     const url = request.nextUrl.clone();
     url.pathname = "/sign-in";

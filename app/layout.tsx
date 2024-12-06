@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "./components/Header";
+import Header from "./components/ui/Header";
 
 export const metadata: Metadata = {
   title: "Job Horizon - Your AI-Powered Career Companion",
