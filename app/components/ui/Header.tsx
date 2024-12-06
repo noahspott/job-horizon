@@ -1,15 +1,15 @@
 import Link from "next/link";
 import AuthButton from "../AuthButton";
 import Content from "./Content";
+import { Button } from "./Button";
 
-export default function Header({
-  menuItems = [
-    {
-      href: "/dashboard/create-resume",
-      display: "Create Resume",
-    },
-  ],
-}: {
+export default function Header({}: // menuItems = [
+//   {
+//     href: "/dashboard/create-resume",
+//     display: "Create Resume",
+//   },
+// ],
+{
   menuItems?: Array<{ href: string; display: string }>;
 }) {
   return (
@@ -18,29 +18,23 @@ export default function Header({
 
       <Content>
         {/* Top row - Auth Button */}
-        <div className="flex justify-end py-2 sm:hidden">
+        <div className="flex justify-end py-1.5 sm:py-2 sm:hidden border-b border-gray-800/50">
           <AuthButton />
         </div>
 
         {/* Bottom row - Navigation */}
-        <nav className="flex items-center justify-between py-2 sm:py-4 relative">
+        <nav className="flex items-center justify-between py-2.5 sm:py-4 relative">
           <Link
             href="/"
-            className="text-xl font-bold text-transparent bg-gradient-to-r from-blue-400 via-white to-blue-300 bg-clip-text"
+            className="text-lg sm:text-xl font-bold text-transparent bg-gradient-to-r from-blue-400 via-white to-blue-300 bg-clip-text"
           >
             JobHorizon.ai
           </Link>
 
-          <div className="flex items-center gap-3 sm:gap-6">
-            {menuItems.map((menuItem) => (
-              <Link
-                key={menuItem.href}
-                href={menuItem.href}
-                className="text-sm text-gray-300 hover:text-white transition-colors"
-              >
-                {menuItem.display}
-              </Link>
-            ))}
+          <div className="flex items-center gap-2 sm:gap-6">
+            <Link href="/dashboard/create-resume">
+              <Button className="text-xs sm:text-sm">Create Resume</Button>
+            </Link>
             <div className="hidden sm:block">
               <AuthButton />
             </div>

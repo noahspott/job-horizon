@@ -33,10 +33,12 @@ export default async function AuthButton() {
       </form>
     </div>
   ) : (
-    <div className="flex gap-2">
-      <Button className="text-xs sm:text-sm py-1 px-2 sm:px-3">
-        <Link href="/sign-in">Sign in</Link>
-      </Button>
+    <div className="relative z-20 flex gap-2">
+      <Link href="/sign-in">
+        <Button className="text-xs sm:text-sm" variant="link">
+          Sign in
+        </Button>
+      </Link>
     </div>
   );
 }
