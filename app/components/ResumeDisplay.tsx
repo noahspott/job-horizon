@@ -51,8 +51,8 @@ const ResumeDisplay: React.FC<ResumeDisplayProps> = ({ resume }) => {
             transition-all duration-300 ease-in-out
             ${
               copied
-                ? "bg-green-200 cursor-default"
-                : "bg-gray-200 hover:bg-gray-300 cursor-pointer"
+                ? "bg-green-500 cursor-default"
+                : "bg-gray-500 hover:bg-gray-600 cursor-pointer"
             }
           `}
         >
@@ -65,7 +65,7 @@ const ResumeDisplay: React.FC<ResumeDisplayProps> = ({ resume }) => {
         </div>
       </div>
 
-      <div className="download-buttons flex justify-center gap-4 p-4 bg-gray-50 rounded-lg shadow-sm border">
+      {/* <div className="download-buttons flex justify-center gap-4 p-4 bg-gray-50 rounded-lg shadow-sm border">
         <button
           onClick={() => handleDownload("pdf")}
           className="px-6 py-2 bg-blue-500 hover:bg-blue-600 text-white rounded-md transition-colors"
@@ -84,7 +84,7 @@ const ResumeDisplay: React.FC<ResumeDisplayProps> = ({ resume }) => {
         >
           Download Text
         </button>
-      </div>
+      </div> */}
     </div>
   );
 };
