@@ -234,12 +234,10 @@ export default function Profile() {
         console.log("Save successful:", data);
         setProfileData(formData);
         setIsEditing(false);
-      } catch (error: any) {
+      } catch (error: unknown) {
         console.error("Detailed error:", {
-          message: error?.message,
-          code: error?.code,
-          details: error?.details,
-          stack: error?.stack,
+          message: (error as Error)?.message,
+          stack: (error as Error)?.stack,
         });
         alert("Failed to save profile. Please check the console for details.");
       }
