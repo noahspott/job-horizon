@@ -1,3 +1,4 @@
+import { createClient } from "@/app/utils/supabase/server";
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
 
@@ -12,6 +13,27 @@ export async function POST(request: Request) {
       );
     }
 
+    const supabase = await createClient();
+
+    // Get the current user
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser();
+    if (authError) throw authError;
+
+    // Get the user's profile
+    const { data: profile, error: profileError } = await supabase
+      .from("user_profiles")
+      .select("*")
+      .eq("user_id", user?.id)
+      .single();
+
+    if (profileError) throw profileError;
+
+    console.log("profile: ", profile);
+
+    // Do AI
     const anthropic = new Anthropic({
       apiKey: process.env.ANTHROPIC_API_KEY!,
     });
@@ -22,7 +44,7 @@ export async function POST(request: Request) {
       messages: [
         {
           role: "user",
-          content: `You are tasked with generating a high-quality, professional resume based on a given job description. Follow these instructions carefully to create a tailored resume that highlights the most relevant skills and experiences for the position.
+          content: `You are an AI assistant tasked with generating a tailored resume for a job applicant based on a given job description and the applicant's information. Your goal is to create a resume that highlights the applicant's relevant skills and experiences without fabricating any information.
 
                     First, carefully read and analyze the following job description:
 
@@ -30,41 +52,50 @@ export async function POST(request: Request) {
                     ${jobDescription}
                     </job_description>
 
-                    Before creating the resume, analyze the job description to identify:
-                    1. Key skills and qualifications required
-                    2. Main responsibilities of the role
-                    3. Industry-specific keywords and phrases
-                    4. Company culture and values (if mentioned)
+                    Now, review the applicant's information:
 
-                    Now, create a professional resume tailored to this job description. Follow these guidelines:
+                    <applicant_info>
+                    ${JSON.stringify(profile)}
+                    </applicant_info>
 
-                    1. Use a clean, professional format with clear section headings.
-                    2. Tailor the content to match the job requirements and company culture.
-                    3. Use action verbs and quantifiable achievements where possible.
-                    4. Keep the resume concise, ideally one to two pages long.
-                    5. Ensure all information is relevant to the position.
+                    Using the provided information, create a tailored resume for the applicant. Follow these guidelines:
 
-                    Include the following sections in the resume:
+                    1. Analyze the job description to identify key requirements, skills, and qualifications.
+                    2. Review the applicant's information and identify relevant experiences, skills, and qualifications that match the job requirements.
+                    3. Structure the resume in the following format:
+                      a. Contact Information
+                      b. Professional Summary
+                      c. Work Experience
+                      d. Education
+                      e. Skills
+                      f. Additional Sections (if applicable, such as certifications, volunteer work, or relevant projects)
 
-                    1. Contact Information: Full name, phone number, email address, and location (city, state).
-                    2. Professional Summary: A brief 2-3 sentence overview highlighting your most relevant qualifications for the position.
-                    3. Skills: A bulleted list of key skills that match the job requirements.
-                    4. Work Experience: List relevant jobs in reverse chronological order. For each position, include:
-                      - Job title
-                      - Company name
-                      - Dates of employment
-                      - 3-5 bullet points describing key responsibilities and achievements
-                    5. Education: List degrees, institutions, and graduation dates.
-                    6. Additional Sections (if relevant): Certifications, Awards, Publications, or Volunteer Work.
+                    4. In the Professional Summary, highlight the applicant's most relevant qualifications and experiences that align with the job description.
 
-                    When writing the resume content:
-                    - Mirror the language and keywords used in the job description.
-                    - Highlight experiences and skills that directly relate to the job requirements.
-                    - Quantify achievements and results whenever possible.
-                    - Avoid using personal pronouns.
-                    - Use present tense for current positions and past tense for previous roles.
+                    5. For Work Experience:
+                      - List relevant positions in reverse chronological order
+                      - Focus on achievements and responsibilities that relate to the job requirements
+                      - Use action verbs and quantify accomplishments where possible
 
-                    Output the completed resume within <resume> tags, formatted as if it were a text document with appropriate line breaks and spacing between sections.`,
+                    6. In the Education section, include relevant degrees, certifications, or training programs.
+
+                    7. In the Skills section, prioritize skills mentioned in the job description that the applicant possesses.
+
+                    8. If applicable, include additional sections that showcase relevant qualifications or experiences.
+
+                    9. Ensure the resume is concise, typically not exceeding two pages.
+
+                    10. Do not fabricate or exaggerate any information. Only use the details provided in the applicant's information.
+
+                    11. Tailor the language and emphasis of the resume to match the tone and requirements of the job description.
+
+                    Once you have created the resume, present it in the following format:
+
+                    <resume>
+                    [Insert the generated resume here, formatted as described above]
+                    </resume>
+
+                    Remember, your goal is to create a compelling resume that accurately represents the applicant's qualifications while highlighting their relevance to the specific job opportunity.`,
         },
       ],
     });
