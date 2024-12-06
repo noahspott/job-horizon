@@ -41,7 +41,6 @@ export default async function Header({
               </Link>
             ))}
             <AuthButton />
-            {user && <span>{user.email}</span>}
           </div>
         </nav>
       </Content>

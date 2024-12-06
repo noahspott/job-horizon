@@ -65,8 +65,9 @@ export default function Profile() {
         if (!user) return;
 
         const { data, error } = await supabase
-          .from("user_profiles")
+          .from("profiles")
           .select("*")
+          .eq("user_id", user.id)
           .single();
 
         if (error) {
