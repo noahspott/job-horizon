@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Content from "@/app/components/ui/Content";
 import ResumeDisplay from "@/app/components/ResumeDisplay";
-import { parseResume } from "@/app/utils/parseResume";
+// import { parseResume } from "@/app/utils/parseResume";
 
 export default function CreateResume() {
   const [jobDescription, setJobDescription] = useState("");

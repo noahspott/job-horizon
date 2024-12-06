@@ -34,9 +34,17 @@ export async function POST(request: Request) {
 
     console.log("profile: ", profile);
 
-    // Do AI
+    // At the start of your POST function:
+    if (!process.env.ANTHROPIC_API_KEY) {
+      console.error("ANTHROPIC_API_KEY is not set");
+      return NextResponse.json(
+        { error: "Server configuration error" },
+        { status: 500 }
+      );
+    }
+
     const anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY!,
+      apiKey: process.env.ANTHROPIC_API_KEY,
     });
 
     const response = await anthropic.messages.create({
