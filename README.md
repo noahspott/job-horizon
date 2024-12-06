@@ -1,4 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Job Horizon
+
+Your career companion for seamless job applications. Build your profile, generate tailored resumes and cover letters, and stay on top of your applications—all powered by AI.
+
+## Features
+
+- **AI-Powered Resume Generation** - Create tailored resumes that match job requirements
+- **Cover Letter Creation** - Generate compelling cover letters customized for each application
+- **Application Tracking** - Keep track of your job applications in one place
+- **Follow-up Management** - Generate professional follow-up emails automatically
+
+## Core Functionality
+
+### Profile Management
+
+- Create and maintain your professional profile
+- Store your skills, experience, education, and projects
+- Update information easily as your career grows
+
+### AI Integration
+
+- Automatic job description parsing from URLs
+- Smart matching of your profile to job requirements
+- Intelligent content generation for applications
+
+### Application Tracking
+
+- Monitor application status
+- Set reminders for follow-ups
+- Track communication history
 
 ## Getting Started
 
@@ -14,23 +43,28 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the application.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Tech Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+This project is built with:
+
+- [Next.js](https://nextjs.org) - React framework for production
+- AI-powered content generation
+- Modern UI with responsive design
+- Secure authentication and data storage
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+To learn more about the technologies used:
 
 - [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
 - [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Contributing
 
-## Deploy on Vercel
+Contributions are welcome! Please feel free to submit a Pull Request.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contact
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+[Your Contact Information or Project Link]
