@@ -16,7 +16,7 @@ export async function GET(request: Request) {
 
     // Initialize Claude
     const anthropic = new Anthropic({
-      apiKey: process.env.ANTHROPIC_API_KEY!, // Add this to your .env.local
+      apiKey: process.env.ANTHROPIC_API_KEY!,
     });
 
     // Ask Claude to extract the job description
@@ -33,7 +33,18 @@ export async function GET(request: Request) {
 
     // Check if Claude's response contains the expected content
     if (response.content && response.content.length > 0) {
-      const description = response.content[0].text;
+      // Handle different types of content blocks
+      const contentBlock = response.content[0];
+      let description = "";
+
+      if ("text" in contentBlock) {
+        description = contentBlock.text;
+      } else if (typeof contentBlock === "string") {
+        description = contentBlock;
+      } else {
+        throw new Error("Unexpected content format from Claude");
+      }
+
       return NextResponse.json({ description });
     } else {
       console.error("Claude response error:", response);
