@@ -1,8 +1,12 @@
 export function parseResume(text: string): string | null {
-  // Regular expression to match content between <resume> tags
-  const resumeRegex = /<resume>([\s\S]*?)<\/resume>/;
+  // Input validation
+  if (!text || typeof text !== "string") {
+    return null;
+  }
 
-  // Find the match
+  // Case-insensitive regex with potential whitespace handling
+  const resumeRegex = /<resume\s*>([\s\S]*?)<\/resume\s*>/i;
+
   const match = text.match(resumeRegex);
 
   // Return the captured content or null if no match

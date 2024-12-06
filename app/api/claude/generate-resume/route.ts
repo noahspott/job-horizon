@@ -114,6 +114,8 @@ export async function POST(request: Request) {
         throw new Error("Unexpected content format from Claude");
       }
 
+      console.log("rawResume: ", rawResume);
+
       const resume = parseResume(rawResume);
       return NextResponse.json({ resume });
     } else {
@@ -124,7 +126,15 @@ export async function POST(request: Request) {
       );
     }
   } catch (error) {
-    console.error("Error generating resume:", error);
+    // Log detailed error information
+    console.error("Error generating resume:", {
+      error: error,
+      message: error instanceof Error ? error.message : "Unknown error",
+      stack: error instanceof Error ? error.stack : undefined,
+      timestamp: new Date().toISOString(),
+    });
+
+    // Return a user-friendly error response
     return NextResponse.json(
       { error: "Failed to generate resume. Please try again later." },
       { status: 500 }

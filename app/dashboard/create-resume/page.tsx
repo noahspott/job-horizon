@@ -21,9 +21,11 @@ export default function CreateResume() {
         body: JSON.stringify({ jobDescription }),
       });
       const data = await response.json();
-      const parsedResume = parseResume(data.resume);
-      if (parsedResume) {
-        setResume(parsedResume);
+
+      console.log("data: ", data);
+
+      if (data.resume) {
+        setResume(data.resume);
       } else {
         console.error("No resume content found in response");
       }
