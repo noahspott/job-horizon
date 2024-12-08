@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Content from "@/app/components/ui/Content";
 import ResumeDisplay from "@/app/components/ResumeDisplay";
-// import { parseResume } from "@/app/utils/parseResume";
 
 export default function CreateResume() {
   const [jobDescription, setJobDescription] = useState("");
@@ -21,8 +20,6 @@ export default function CreateResume() {
         body: JSON.stringify({ jobDescription }),
       });
       const data = await response.json();
-
-      console.log("data: ", data);
 
       if (data.resume) {
         setResume(data.resume);
