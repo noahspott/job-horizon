@@ -79,14 +79,6 @@ Visit [http://localhost:3000](http://localhost:3000) to see the application.
 - Supabase account
 - Anthropic API key
 
-### Environment Variables
-
-```env
-NEXT_PUBLIC_SUPABASE_URL=your_supabase_url
-NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_key
-ANTHROPIC_API_KEY=your_claude_api_key
-```
-
 ## Learn More
 
 - [Next.js Documentation](https://nextjs.org/docs)

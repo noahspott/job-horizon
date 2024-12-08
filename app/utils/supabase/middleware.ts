@@ -46,16 +46,16 @@ export async function updateSession(request: NextRequest) {
     data: { user },
   } = await supabase.auth.getUser();
 
-  console.log("\n\n********");
-  console.log("time: ", new Date().toLocaleTimeString());
-  console.log("user: ", user);
-  console.log("pathname: ", request.nextUrl.pathname);
-  console.log(
-    "redirect: ",
-    request.nextUrl.pathname !== "/" &&
-      !request.nextUrl.pathname.startsWith("/sign-in")
-  );
-  console.log("********\n\n");
+  // console.log("\n\n********");
+  // console.log("time: ", new Date().toLocaleTimeString());
+  // console.log("user: ", user);
+  // console.log("pathname: ", request.nextUrl.pathname);
+  // console.log(
+  //   "redirect: ",
+  //   request.nextUrl.pathname !== "/" &&
+  //     !request.nextUrl.pathname.startsWith("/sign-in")
+  // );
+  // console.log("********\n\n");
 
   if (!user && request.nextUrl.pathname.startsWith("/dashboard")) {
     // no user trying to access protected /dashboard routes, redirect to sign-in
