@@ -25,9 +25,11 @@ interface WorkExperience {
 interface ProfileData {
   // Account Info
   email: string;
-  name: string;
 
   // Resume Info
+  name: string;
+  phone: string;
+  resumeEmail: string;
   city: string;
   state: string;
   country: string;
@@ -45,6 +47,8 @@ export default function Profile() {
   const [profileData, setProfileData] = useState<ProfileData>({
     email: "",
     name: "",
+    phone: "",
+    resumeEmail: "",
     city: "",
     state: "",
     country: "",
@@ -78,6 +82,8 @@ export default function Profile() {
         const sanitizedData = {
           email: data.email || "",
           name: data.name || "",
+          phone: data.phone || "",
+          resumeEmail: data.resume_email || "",
           city: data.city || "",
           state: data.state || "",
           country: data.country || "",
@@ -117,7 +123,6 @@ export default function Profile() {
         </CardHeader>
         <CardContent>
           <p>Email: {profileData.email}</p>
-          <p>Name: {profileData.name}</p>
         </CardContent>
       </Card>
 
@@ -129,6 +134,9 @@ export default function Profile() {
         <CardContent className="space-y-6">
           <div>
             <h3 className="font-semibold mb-2">Personal Information</h3>
+            <p>Name: {profileData.name}</p>
+            <p>Phone: {profileData.phone}</p>
+            <p>Resume Email: {profileData.resumeEmail}</p>
             <p>City: {profileData.city}</p>
             <p>State: {profileData.state}</p>
             <p>Country: {profileData.country}</p>
@@ -199,6 +207,8 @@ export default function Profile() {
           user_id: user.id,
           email: formData.email,
           name: formData.name,
+          phone: formData.phone,
+          resume_email: formData.resumeEmail,
           city: formData.city,
           state: formData.state,
           country: formData.country,
@@ -358,10 +368,16 @@ export default function Profile() {
                     onChange={(e) => handleLocalChange("name", e.target.value)}
                   />
                   <Input
-                    label="Email"
+                    label="Phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => handleLocalChange("phone", e.target.value)}
+                  />
+                  <Input
+                    label="Resume Email"
                     type="email"
-                    value={formData.email}
-                    onChange={(e) => handleLocalChange("email", e.target.value)}
+                    value={formData.resumeEmail}
+                    onChange={(e) => handleLocalChange("resumeEmail", e.target.value)}
                   />
                   <Input
                     label="City"

@@ -121,26 +121,30 @@ And this work experience:
 ${JSON.stringify(workExperience)}
 </work_experience>
 
-Based on the job description and work experience provided, create a tailored work experience section for a resume. Follow these guidelines:
+Create a tailored work experience section that follows this exact format for each position:
 
+[Company Name]
+[Job Title]
+[Start Date] - [End Date]
+• [Achievement/responsibility]
+• [Achievement/responsibility]
+• [Achievement/responsibility]
+
+Guidelines:
 1. List positions in reverse chronological order
-2. Focus on achievements and responsibilities that directly relate to the job requirements
-3. Use strong action verbs to begin each bullet point
-4. Quantify accomplishments where possible using numbers and metrics
-5. Emphasize skills and experiences that match keywords from the job description
-6. Keep descriptions concise but impactful
-7. Only use information provided in the work experience data
-8. Format each position consistently with:
-   - Company name
-   - Job title
-   - Dates of employment
-   - Location (if provided)
-   - 3-5 bullet points of key achievements/responsibilities
+2. Company name, job title, and dates should NOT have bullet points
+3. Only use bullet points (•) for achievements/responsibilities
+4. Each bullet point should:
+   - Start with a strong action verb
+   - Focus on achievements that match the job requirements
+   - Include metrics and numbers when available
+5. Only include information from the provided work experience
+6. Use 3-5 bullet points per position
 
 Present the work experience section in this format:
 
 <work_experience_section>
-[Insert formatted work experience here]
+[Insert formatted work experience following the exact structure above]
 </work_experience_section>`;
 }
 
@@ -162,19 +166,21 @@ And these skills:
 ${skills || "No skills provided"}
 </skills>
 
-Based on the job description and skills provided, create a tailored skills section for a resume. Follow these guidelines:
+Create a tailored skills section for the resume by following these steps:
 
-1. Organize skills into relevant categories (e.g., Technical Skills, Soft Skills, Tools & Technologies)
-2. Prioritize skills that directly match or relate to the job requirements
-3. List the most relevant skills first within each category
-4. Include only skills mentioned in the provided skills data
-5. Format the skills in a clear, scannable way
-6. If applicable, indicate proficiency levels for technical skills
-7. Ensure all listed skills are relevant to the position
+1. First, analyze the job description to identify the key skill categories that would be most relevant for this role
+2. Then, carefully review the candidate's provided skills
+3. Create appropriate skill groupings based on the job requirements, but ONLY include skills that are explicitly mentioned in the candidate's skill list
+4. Do not fabricate or assume any skills that aren't clearly stated in the candidate's profile
+5. Prioritize skills that directly match the job requirements
+6. If a skill category from the job description has no matching skills from the candidate, omit that category entirely
 
-Present the skills section in this format:
+Format the response as a bulleted list with categories and comma-separated skills:
 
 <skills_section>
-[Insert categorized skills here]
-</skills_section>`;
+- [Category Name]: [skill1], [skill2], [skill3]
+- [Category Name]: [skill1], [skill2]
+</skills_section>
+
+Remember: Only include skills that are explicitly listed in the candidate's profile. It's better to have fewer, accurate skills than to include skills the candidate hasn't claimed.`;
 

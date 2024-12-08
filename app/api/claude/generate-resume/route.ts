@@ -1,8 +1,9 @@
 import { createClient } from "@/app/utils/supabase/server";
 import { NextResponse } from "next/server";
 import Anthropic from "@anthropic-ai/sdk";
-import { parseResume, parseProfessionalSummary, parseWorkExperience, parseSkills } from "./parsers";
-import { getProfessionalSummaryPrompt, getResumePrompt, getWorkExperiencePrompt, getSkillsPrompt } from "./prompts";
+import { parseProfessionalSummary, parseWorkExperience, parseSkills } from "./parsers";
+import { getProfessionalSummaryPrompt, getWorkExperiencePrompt, getSkillsPrompt } from "./prompts";
+import { getHeader, getEducationSection } from "./resume";
 
 export async function POST(request: Request) {
   try {
@@ -33,8 +34,6 @@ export async function POST(request: Request) {
       .single();
     if (profileError) throw profileError;
 
-    console.log("profile: ", profile);
-
     // Check if the Anthropic API key is set
     if (!process.env.ANTHROPIC_API_KEY) {
       console.error("ANTHROPIC_API_KEY is not set");
@@ -49,16 +48,8 @@ export async function POST(request: Request) {
       apiKey: process.env.ANTHROPIC_API_KEY,
     });
 
-    // Create Contact Information Section
-    // Don't send this to the AI, just use it to fill in the contact information section
-    // If the user has a LinkedIn profile, include it in the contact information
-    // If the user has a GitHub profile, include it in the contact information
-    // If the user has a personal website, include it in the contact information
-    // If the user has a phone number, include it in the contact information
-    // If the user has an email address, include it in the contact information
-
     // Run all AI generations in parallel
-    const [professionalSummaryResponse, workExperienceResponse, skillsResponse, resumeResponse] = await Promise.all([
+    const [professionalSummaryResponse, workExperienceResponse, skillsResponse] = await Promise.all([
       anthropic.messages.create({
         model: "claude-2.0",
         max_tokens: 400,
@@ -87,29 +78,23 @@ export async function POST(request: Request) {
           skills: profile.skills,
         }) }],
       }),
-      
-      anthropic.messages.create({
-        model: "claude-2.0",
-        max_tokens: 1024,
-        messages: [{ role: "user", content: getResumePrompt({
-          jobDescription,
-          profile,
-        }) }],
-      })
     ]);
 
     // Parse all responses
-    const parsedProfessionalSummary = parseProfessionalSummary(professionalSummaryResponse);
-    const parsedWorkExperience = parseWorkExperience(workExperienceResponse);
-    const parsedSkills = parseSkills(skillsResponse);
-    const resume = parseResume(resumeResponse);
+    const professionalSummary = parseProfessionalSummary(professionalSummaryResponse);
+    const workExperience = parseWorkExperience(workExperienceResponse);
+    const skills = parseSkills(skillsResponse);
 
-    console.log("********************");
-    console.log("parsedProfessionalSummary: \n", parsedProfessionalSummary);
-    console.log("parsedWorkExperience: \n", parsedWorkExperience);
-    console.log("parsedSkills: \n", parsedSkills);
-    console.log("********************");
-    console.log("resume: ", resume);
+    const header = getHeader(profile);
+    const educationSection = getEducationSection(profile.education[0]);
+
+    const resume = [
+      header,
+      "\nProfessional Summary\n" + professionalSummary,
+      "\nWork Experience\n" + workExperience,
+      "\nEducation\n" + educationSection,
+      "\nSkills\n" + skills,
+    ].join("\n");
 
     return NextResponse.json({ resume });
   } catch (error) {
