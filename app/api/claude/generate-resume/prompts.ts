@@ -1,3 +1,11 @@
+/**
+ * Generates a prompt for creating a professional summary section of a resume
+ * @param jobDescription - The target job posting description
+ * @param workExperience - The candidate's work history
+ * @param education - The candidate's educational background
+ * @param skills - The candidate's skills
+ * @returns A structured prompt for the AI to generate a tailored professional summary
+ */
 export const getProfessionalSummaryPrompt = ({
   jobDescription,
   workExperience,
@@ -41,67 +49,12 @@ Format the response as:
 [Your summary here]
 </professional_summary>`;
 
-export const getResumePrompt = ({
-  jobDescription,
-  profile,
-}: {
-  jobDescription: string;
-  profile: any;
-}) => {
-  return `You are an AI assistant tasked with generating a tailored resume for a job applicant based on a given job description and the applicant's information. Your goal is to create a resume that highlights the applicant's relevant skills and experiences without fabricating any information.
-
-First, carefully read and analyze the following job description:
-
-<job_description>
-${jobDescription}
-</job_description>
-
-Now, review the applicant's information:
-
-<applicant_info>
-${JSON.stringify(profile)}
-</applicant_info>
-
-Using the provided information, create a tailored resume for the applicant. Follow these guidelines:
-
-1. Analyze the job description to identify key requirements, skills, and qualifications.
-2. Review the applicant's information and identify relevant experiences, skills, and qualifications that match the job requirements.
-3. Structure the resume in the following format:
-  a. Contact Information
-  b. Professional Summary
-  c. Work Experience
-  d. Education
-  e. Skills
-  f. Additional Sections (if applicable, such as certifications, volunteer work, or relevant projects)
-
-4. In the Professional Summary, highlight the applicant's most relevant qualifications and experiences that align with the job description.
-
-5. For Work Experience:
-  - List relevant positions in reverse chronological order
-  - Focus on achievements and responsibilities that relate to the job requirements
-  - Use action verbs and quantify accomplishments where possible
-
-6. In the Education section, include relevant degrees, certifications, or training programs.
-
-7. In the Skills section, prioritize skills mentioned in the job description that the applicant possesses.
-
-8. If applicable, include additional sections that showcase relevant qualifications or experiences.
-
-9. Ensure the resume is concise, typically not exceeding two pages.
-
-10. Do not fabricate or exaggerate any information. Only use the details provided in the applicant's information.
-
-11. Tailor the language and emphasis of the resume to match the tone and requirements of the job description.
-
-Once you have created the resume, present it in the following format:
-
-<resume>
-[Insert the generated resume here, formatted as described above]
-</resume>
-
-Remember, your goal is to create a compelling resume that accurately represents the applicant's qualifications while highlighting their relevance to the specific job opportunity.`;
-}
-
+/**
+ * Generates a prompt for creating a tailored work experience section
+ * @param jobDescription - The target job posting description
+ * @param workExperience - The candidate's work history
+ * @returns A structured prompt for the AI to generate a formatted work experience section
+ */
 export const getWorkExperiencePrompt = ({
   jobDescription,
   workExperience,
@@ -148,6 +101,12 @@ Present the work experience section in this format:
 </work_experience_section>`;
 }
 
+/**
+ * Generates a prompt for creating a categorized skills section
+ * @param jobDescription - The target job posting description
+ * @param skills - The candidate's skills
+ * @returns A structured prompt for the AI to generate a categorized skills section
+ */
 export const getSkillsPrompt = ({
   jobDescription,
   skills,
